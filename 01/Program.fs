@@ -10,7 +10,8 @@ let part1 (numbers: int seq) =
 
 let part2 (numbers: int seq) =
     numbers
-    |> Seq.triplemap (fun v1 v2 v3 -> v1 + v2 + v3)
+    |> Seq.windowed 3
+    |> Seq.map Seq.sum
     |> part1
 
 [<EntryPoint>]

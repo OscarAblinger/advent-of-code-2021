@@ -22,3 +22,9 @@ module Seq =
                             Some (!i, s))
         |> Seq.groupBy fst
         |> Seq.map (snd >> Seq.map snd)
+
+module List =
+    let rec transpose (matrix: 'a list list): 'a list list =
+        match matrix with
+        | (_::_)::_ as M -> List.map List.head M :: transpose (List.map List.tail M)
+        | _ -> [[]]

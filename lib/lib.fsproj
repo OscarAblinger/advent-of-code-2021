@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Matrix.fs" />
     <Compile Include="Extensions.fs" />
     <Compile Include="InputUtils.fs" />
   </ItemGroup>

@@ -1,11 +1,4 @@
 # 05
 
-In this case the solution for part 1 is overly complicated, but way more efficient than the simple solution.
-The reason for that is that I first expected a way bigger input.
-
-Since it wasn't the second part was solved in ~7 lines.
-The first part could've been solved in the same way if you just filter the input first like in the first example:
-
-```fsharp
-List.filter (fun ((x1, y1), (x2, y2)) -> x1 = x2 || y1 = y2)
-```
+`Efficient.fs` also contains an overly complicated, but a lot more efficient solution for the first part.
+The reason for that is simply that I fell into the trap of premature optimization by thinking that the input would be way bigger.

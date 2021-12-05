@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Efficient.fs" />
     <Compile Include="Program.fs" />
     <Content Include="data/*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

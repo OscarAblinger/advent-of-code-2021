@@ -22,3 +22,6 @@ module Seq =
                             Some (!i, s))
         |> Seq.groupBy fst
         |> Seq.map (snd >> Seq.map snd)
+
+module Map =
+    let mapValues f (map: Map<_, _>) = Map.map (fun _ values -> f values) map

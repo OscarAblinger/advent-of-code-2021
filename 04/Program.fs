@@ -51,9 +51,6 @@ let parseBoard (boardStr: string seq): MutableBingoBoard =
     let boardLineRegex = BoardLineRegex()
     boardStr
     |> Seq.map boardLineRegex.TypedMatches
-(*    |> Seq.map (fun x -> 
-                    printfn "%A" x
-                    x) *)
     |> Seq.map (Seq.map (fun x -> x.number.AsInt))
     |> Seq.map Seq.toList
     |> Seq.toList

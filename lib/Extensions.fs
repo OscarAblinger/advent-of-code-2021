@@ -1,5 +1,11 @@
 ﻿module Extensions
 
+let (|LargerThan|Equal|LessThan|) (a, b) =
+    match compare a b with
+    | 0 -> Equal
+    | x when x > 0 -> LargerThan
+    | _ -> LessThan
+
 module Seq =
     /// Splits a sequence into subsequences at all elements that the given predicate returns true for
     /// The triggering element is included in the following subsequence

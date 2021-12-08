@@ -31,3 +31,31 @@ module Seq =
 
 module Map =
     let mapValues f (map: Map<_, _>) = Map.map (fun _ values -> f values) map
+
+    let merge (convert: 'b -> 'b -> 'b) (m1: Map<'a, 'b>) (m2: Map<'a, 'b>): Map<'a, 'b> =
+        Map.fold (fun acc key value ->
+            Map.change key (fun el ->
+                el
+                |> Option.map (convert value)
+                |> Option.orElse (Some value)
+            ) acc
+        ) m2 m1
+
+module MultiMap =
+    let union (m1: Map<'a, Set<'b>>) (m2: Map<'a, Set<'b>>) =
+        Map.fold (fun acc key value ->
+            Map.change key (fun el ->
+                    el
+                    |> Option.map (Set.union value)
+                    |> Option.orElse (Some value)
+                ) acc
+            ) m1 m2
+
+    let intersection (m1: Map<'a, Set<'b>>) (m2: Map<'a, Set<'b>>) =
+        Map.fold (fun acc key value ->
+            Map.change key (fun el ->
+                    el
+                    |> Option.map (Set.intersect value)
+                    |> Option.bind (fun s -> if s.IsEmpty then None else Some s)
+                ) acc
+            ) m1 m2

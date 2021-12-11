@@ -2,6 +2,15 @@
 
 type Matrix<'a> = 'a list list
 
+let map (f: 'a -> 'b) (m: Matrix<'a>): Matrix<'b> = List.map (List.map f) m
+
+let mapi (f: int -> int -> 'a -> 'b) (m: Matrix<'a>): Matrix<'b> =
+    List.mapi (fun x -> List.mapi (f x)) m
+
+let tryItem (x: int, y: int) (m: Matrix<'a>) =
+    List.tryItem x m
+    |> Option.bind (List.tryItem y)
+
 let hasPosition (x: int, y: int) (m: Matrix<'a>) = 
     x >= 0 && y >= 0 && x < m.Length && y < m.[x].Length
 
@@ -14,6 +23,12 @@ let tryFindIndex f (m: Matrix<'a>) =
         | None -> None
     )
     |> List.tryHead
+
+let indexed (m: Matrix<'a>): Matrix<int * int * 'a> =
+    m
+    |> List.map (List.indexed)
+    |> List.indexed
+    |> List.map (fun (x, inner) -> List.map (fun (y, v) -> (x, y, v)) inner)
 
 let fold (f: 'state -> 'a -> 'state) (state: 'state) (m: Matrix<'a>) =
     let mutable s = state

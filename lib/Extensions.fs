@@ -6,6 +6,21 @@ let (|LargerThan|Equal|LessThan|) (a, b) =
     | x when x > 0 -> LargerThan
     | _ -> LessThan
 
+module List =
+    let countInt64 (list: 'a list): Map<'a, int64> =
+        list
+        |> List.fold (fun map value ->
+            Map.change value (fun cnt ->
+                match cnt with
+                | Some c -> Some (c + 1L)
+                | None -> Some 1) map
+        ) Map.empty
+        
+    let mergePairsBy (mergeFunc: 'b -> 'b -> 'b) (list: ('a * 'b) list): ('a* 'b) list =
+        list
+        |> List.groupBy fst
+        |> List.map (fun (key, values) -> (key, values |> List.map snd |> List.reduce mergeFunc))
+
 module Seq =
     /// Splits a sequence into subsequences at all elements that the given predicate returns true for
     /// The triggering element is included in the following subsequence

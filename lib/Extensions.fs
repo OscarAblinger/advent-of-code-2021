@@ -21,6 +21,16 @@ module List =
         |> List.groupBy fst
         |> List.map (fun (key, values) -> (key, values |> List.map snd |> List.reduce mergeFunc))
 
+    let zipWith (f: 'a -> 'b) (list: 'a list): ('a * 'b) list =
+        List.map (fun el -> el, f el) list
+    
+    let zipWithSome (f: 'a -> 'b option) (list: 'a list): ('a * 'b) list =
+        List.choose (fun el ->
+            match f el with
+            | Some v -> Some (el, v)
+            | None -> None
+        ) list
+
 module Seq =
     /// Splits a sequence into subsequences at all elements that the given predicate returns true for
     /// The triggering element is included in the following subsequence

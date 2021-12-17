@@ -1,5 +1,7 @@
 ﻿module Matrix
 
+open System
+
 type Matrix<'a> = 'a list list
 
 let map (f: 'a -> 'b) (m: Matrix<'a>): Matrix<'b> = List.map (List.map f) m
@@ -36,3 +38,16 @@ let fold (f: 'state -> 'a -> 'state) (state: 'state) (m: Matrix<'a>) =
         for el in row do
             s <- f s el
     s
+
+let lastIndex (m: Matrix<'a>) =
+    let lastX = m.Length-1
+
+    if lastX < 0 then
+        raise (ArgumentException ("Cannot get last index of matrix with width 0"))
+
+    let lastY = m.[lastX].Length - 1
+
+    if lastX < 0 then
+        raise (ArgumentException ("Cannot get last index of matrix with height 0"))
+
+    (lastX, lastY)
